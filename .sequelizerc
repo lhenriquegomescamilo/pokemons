@@ -1,0 +1,12 @@
+var path = require('pah')
+
+var environment = process.env.NODE_ENV || 'development';
+var configEnvironment = {
+      'config': path.resolve('app/config/env', 'sequelize.js'),
+      'migrations-path': path.resolve('app/config/db', 'migrate'),
+      'seeders-path': path.resolve('app/config/db', 'seeders'),
+      'models-path': path.resolve('app', 'models')
+ }
+
+ module.exports = configEnvironment
+

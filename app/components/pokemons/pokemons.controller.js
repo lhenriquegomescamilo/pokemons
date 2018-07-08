@@ -3,8 +3,7 @@ class PokemonsController {
     }
 
     create(request, response) {
-        console.log('doido rei to aqui');
-        response.status(200).end();
+        response.status(200).json({message: 'taa tuuudo ok'}).end();
     }
 }
 

@@ -7,10 +7,7 @@ class PokemonRouter {
 
     routes(application) {
         application.route('/api/pokemons')
-            .get((request, response) => {
-                console.log('calling here');
-                this._pokemonRouter.create(request, response)
-            });
+            .get((request, response) => this._pokemonRouter.create(request, response));
     }
 }
 
