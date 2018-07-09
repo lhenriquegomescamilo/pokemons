@@ -1,0 +1,5 @@
+--require ./test/integration/config/helpers.js
+--reporter spec
+--recursive
+--slow 5000
+--timeout 350000
