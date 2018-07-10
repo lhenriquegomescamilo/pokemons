@@ -25,4 +25,31 @@ describe('Testando endpoint de pokemon ', () => {
                 });
         });
     });
+
+    describe('DELETE pokemons', () => {
+        it('Remover por id', done => {
+            request(app)
+                .delete('/api/pokemons/1')
+                .set('Content-Type', 'application/json')
+                .end((error, response) => {
+                    expect(response.status).to.equal(HttpStatus.NO_CONTENT);
+                    done(error);
+                })
+        });
+    });
+
+
+    describe('UPDATE pokemon', () => {
+        it('Atualizar treinador por Id Pokemon', done => {
+            const trainer = {treinador: 'Thiago'};
+            request(app)
+                .put('/api/pokemons/2')
+                .set('Content-Type', 'application/json')
+                .send(trainer)
+                .end((error, response) => {
+                    expect(response.status).to.equal(HttpStatus.NO_CONTENT);
+                    done(error);
+                })
+        });
+    });
 });

@@ -18,7 +18,6 @@ class PokemonsController {
     }
 
     findById(request, response) {
-        console.log("REQUEST", request.params.id);
         const idPokemon = request.params.id;
         return this._pokemonService.findById(idPokemon).subscribe(
             pokemon => response.status(HttpStatus.OK).json(pokemon),
@@ -26,6 +25,19 @@ class PokemonsController {
         ).unsubscribe();
     }
 
+    removeById(request, response) {
+        const idPokemon = request.params.id;
+        this._pokemonService.removeById(idPokemon);
+        response.status(HttpStatus.NO_CONTENT).end();
+    }
+
+    updatebyId(request, response) {
+        const idPokemon = request.params.id;
+        const pokemon = request.body;
+        this._pokemonService.updateById(idPokemon, pokemon);
+        response.status(HttpStatus.NO_CONTENT).end();
+
+    }
 }
 
 module.exports = PokemonsController;

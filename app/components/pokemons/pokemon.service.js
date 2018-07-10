@@ -5,15 +5,7 @@ const _ = require('lodash');
 class PokemonService {
 
     constructor() {
-
-    }
-
-    findAll() {
-        return of(this._mockData());
-    }
-
-    _mockData() {
-        return [{
+        this.data = [{
             "id": 1,
             "tipo": "pikachu",
             "treinador": "Thiago",
@@ -26,9 +18,24 @@ class PokemonService {
         }];
     }
 
+    findAll() {
+        return of(this.data);
+    }
+
     findById(idPokemon) {
-        return from(this._mockData())
+        return from(this.data)
             .pipe(filter(pokemon => pokemon.id == idPokemon))
+    }
+
+    removeById(idPokemon) {
+        this.data = this.data.filter(pokemon => pokemon.id != idPokemon);
+
+    }
+
+    updateById(idPokemon, pokemon) {
+        const indexPokemon = this.data.findIndex(p => p.id == idPokemon);
+        this.data[indexPokemon].treinador = pokemon.treinador;
+
     }
 }
 

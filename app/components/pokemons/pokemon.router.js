@@ -2,15 +2,18 @@ const PokemonsController = require('./pokemons.controller');
 
 class PokemonRouter {
     constructor() {
-        this._pokemonRouter = new PokemonsController();
+        this._pokemonController = new PokemonsController();
     }
 
     routes(application) {
         application.route('/api/pokemons')
-            .get((request, response) => this._pokemonRouter.findAll(request, response));
+            .get((request, response) => this._pokemonController.findAll(request, response));
 
         application.route('/api/pokemons/:id')
-            .get((request, response) => this._pokemonRouter.findById(request, response));
+            .get((request, response) => this._pokemonController.findById(request, response))
+            .delete((request, response) => this._pokemonController.removeById(request, response))
+            .put((request, response) => this._pokemonController.updatebyId(request, response));
+
     }
 }
 
