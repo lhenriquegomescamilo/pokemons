@@ -6,8 +6,11 @@ class PokemonsController {
         this._pokemonService = new PokemonService();
     }
 
-    create(request, response) {
 
+    create(request, response) {
+        const newPokemon = request.body;
+        const pokemonCreated = this._pokemonService.create(newPokemon);
+        response.status(HttpStatus.OK).json(pokemonCreated);
     }
 
     findAll(request, response) {

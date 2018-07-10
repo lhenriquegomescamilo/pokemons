@@ -18,6 +18,12 @@ class PokemonService {
         }];
     }
 
+    create(newPokemon) {
+        const pokemons = {...newPokemon, id: 3, nivel: 1};
+        this.data.push(pokemons );
+        return pokemons;
+    }
+
     findAll() {
         return of(this.data);
     }
@@ -37,6 +43,8 @@ class PokemonService {
         this.data[indexPokemon].treinador = pokemon.treinador;
 
     }
+
+
 }
 
 module.exports = PokemonService;

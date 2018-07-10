@@ -2,6 +2,26 @@ const {app, expect, request} = require('./config/helpers');
 const HttpStatus = require('http-status');
 
 describe('Testando endpoint de pokemon ', () => {
+
+    describe('POST pokemons', () => {
+        it('Cadastrando novo pokemon', done => {
+            const newPokemon =   {
+                "tipo": "pikachu",
+                "treinador": "Thiago"
+            };
+
+            request(app)
+                .post('/api/pokemons')
+                .set('Content-Type', 'application/json')
+                .send(newPokemon)
+                .end((error, response) => {
+                    expect(response.status).to.equal(HttpStatus.OK);
+                    expect(response.body).to.have.property('id');
+                    done(error);
+                })
+        });
+    });
+
     describe('GET pokemons', () => {
         it('Buscando por todos pokemons', done => {
             request(app)
