@@ -1,4 +1,4 @@
-const {of} = require('rxjs');
+const {of, from} = require('rxjs');
 const {filter, map} = require('rxjs/operators');
 const _ = require('lodash');
 
@@ -27,9 +27,8 @@ class PokemonService {
     }
 
     findById(idPokemon) {
-        return this.findAll()
-            .pipe(filter(pokemons => pokemons.filter(pokemon => pokemon.id === idPokemon)))
-            .pipe(map(_.head))
+        return from(this._mockData())
+            .pipe(filter(pokemon => pokemon.id == idPokemon))
     }
 }
 
