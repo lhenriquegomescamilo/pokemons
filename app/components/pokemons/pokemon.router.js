@@ -16,7 +16,10 @@ class PokemonRouter {
             .delete((request, response) => this._pokemonController.removeById(request, response))
             .put((request, response) => this._pokemonController.updatebyId(request, response));
 
-    }
+        application.route('/api/battle/:pokemonIdA/:pokemonIdB')
+            .post((request, response) => this._pokemonController.battle(request, response));
+
+   }
 }
 
 module.exports = PokemonRouter;
