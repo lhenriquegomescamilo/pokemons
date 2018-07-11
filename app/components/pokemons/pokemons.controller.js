@@ -62,14 +62,9 @@ class PokemonsController {
     }
 
     _fight(pokemonA, pokemonB) {
-        let weights = [];
+        const weights = this._checkLevel(pokemonA, pokemonB);
         const valueRandom = Math.random();
-
         const pokemonsInArena = [pokemonA, pokemonB];
-
-        if (pokemonA.nivel == pokemonB.nivel) weights = [1 / 2, 1 / 2];
-        if (pokemonA.nivel > pokemonB.nivel) weights = [2 / 3, 1 / 3];
-        if (pokemonA.nivel < pokemonB.nivel) weights = [1 / 3, 2 / 3];
 
         let sumScore = 0, lastIndex = weights.length - 1;
         for (let index = 0; index < lastIndex; ++index) {
@@ -78,6 +73,12 @@ class PokemonsController {
         }
 
         return pokemonsInArena[lastIndex];
+    }
+
+    _checkLevel(pokemonA, pokemonB) {
+        if (pokemonA.nivel == pokemonB.nivel) return [1 / 2, 1 / 2];
+        if (pokemonA.nivel > pokemonB.nivel) return [2 / 3, 1 / 3];
+        if (pokemonA.nivel < pokemonB.nivel) return [1 / 3, 2 / 3];
     }
 }
 
