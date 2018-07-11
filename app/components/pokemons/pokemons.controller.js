@@ -1,11 +1,9 @@
 const PokemonService = require('./pokemon.service');
 const HttpStatus = require('http-status');
-const {combineLatest} = require('rxjs');
 
 class PokemonsController {
     constructor() {
         this._pokemonService = new PokemonService();
-        this._randomNum = Math.random();
     }
 
 
