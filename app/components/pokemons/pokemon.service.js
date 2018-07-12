@@ -1,6 +1,6 @@
 const {of, from} = require('rxjs');
-const {filter, map} = require('rxjs/operators');
-const _ = require('lodash');
+const {filter} = require('rxjs/operators');
+const db = require('../../models');
 
 class PokemonService {
 
@@ -16,12 +16,17 @@ class PokemonService {
             "treinador": "Renato",
             "nivel": 1
         }];
+
+        this._pokemonModel = db.sequelize.model('Pokemon');
     }
 
-    create(newPokemon) {
-        const pokemons = {...newPokemon, id: 3, nivel: 1};
-        this.data.push(pokemons );
-        return pokemons;
+    create(pokemon) {
+        // const pokemons = {...newPokemon, id: 3, nivel: 1};
+        // this.data.push(pokemons);
+        // return pokemons;
+        return Promise.resolve(this._pokemonModel.create(pokemon))
+            .then(sequelizeObject => sequelizeObject.dataValues)
+
     }
 
     findAll() {

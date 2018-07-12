@@ -1,0 +1,17 @@
+version: '2'
+services:
+  challenge-jazida:
+    container_name: challenge-jazida
+    image: mysql
+    environment:
+      MYSQL_DATABASE: 'challenge-jazida'
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_USER: 'challenge-jazida'
+      MYSQL_PASSWORD: 'challenge-jazida'
+    networks:
+      - challenge-jazida-api
+    ports:
+      - '3306:3306'
+networks:
+  challenge-jazida-api:
+

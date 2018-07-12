@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "start": "node ./app.js",
-    "integration-test": " mocha --opts ./test/integration/config/mocha.opts ./test/integration/config/integration.js"
+    "integration-test": " mocha --opts ./test/integration/config/mocha.opts ./test/integration/config/integration.js",
+    "migrate": "./node_modules/.bin/sequelize db:migrate"
   },
   "dependencies": {
+    "async": "^2.6.1",
     "chai": "^4.1.2",
     "cookie-parser": "~1.4.3",
     "cors": "^2.8.4",
@@ -18,8 +20,12 @@
     "lodash": "^4.17.10",
     "mocha": "^5.2.0",
     "morgan": "^1.9.0",
+    "mysql": "^2.15.0",
+    "mysql2": "^1.5.3",
     "rxjs": "^6.2.1",
-    "sequelize": "^3.31.1",
-    "supertest": "^3.1.0"
+    "sequelize": "^4.38.0",
+    "sequelize-cli": "^4.0.0",
+    "supertest": "^3.1.0",
+    "tedious": "^2.6.3"
   }
 }

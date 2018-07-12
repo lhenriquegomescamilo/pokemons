@@ -9,8 +9,11 @@ class PokemonsController {
 
     create(request, response) {
         const newPokemon = request.body;
-        const pokemonCreated = this._pokemonService.create(newPokemon);
-        response.status(HttpStatus.OK).json(pokemonCreated);
+        this._pokemonService.create(newPokemon)
+            .then(pokemonCreated => {
+                response.status(HttpStatus.OK).json(pokemonCreated);
+            });
+
     }
 
     findAll(request, response) {
