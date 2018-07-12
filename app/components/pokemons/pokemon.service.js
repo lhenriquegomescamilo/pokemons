@@ -18,12 +18,6 @@ class PokemonService {
 
     }
 
-    _extractDefault() {
-        return sequelizeObject => {
-            return sequelizeObject.dataValues;
-        }
-    }
-
     findAll() {
         return Promise.resolve(this._pokemonModel.findAll())
             .then(sequelizeObject => plain(sequelizeObject));
