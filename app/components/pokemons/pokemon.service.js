@@ -3,6 +3,7 @@ const {filter} = require('rxjs/operators');
 const db = require('../../models');
 const plain = require('../../utils/plain');
 
+const START_LEVEL = 1;
 class PokemonService {
 
     constructor() {
@@ -22,6 +23,7 @@ class PokemonService {
     }
 
     create(pokemon) {
+        pokemon.nivel = START_LEVEL;
         return Promise
             .resolve(this._pokemonModel.create(pokemon))
             .then(sequelizeObject => {
@@ -55,12 +57,11 @@ class PokemonService {
     }
 
     updateById(idPokemon, pokemon) {
-        const indexPokemon = this.data.findIndex(p => p.id == idPokemon);
-        this.data[indexPokemon].treinador = pokemon.treinador;
+        return Promise
+            .resolve(this._pokemonModel.update(pokemon, {where: {id: idPokemon}}))
+            .then(() => this.findById(idPokemon));
 
     }
-
-
 }
 
 module.exports = PokemonService;

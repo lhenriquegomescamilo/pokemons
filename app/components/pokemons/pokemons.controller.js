@@ -40,9 +40,8 @@ class PokemonsController {
     updatebyId(request, response) {
         const idPokemon = request.params.id;
         const pokemon = request.body;
-        this._pokemonService.updateById(idPokemon, pokemon);
-        response.status(HttpStatus.NO_CONTENT).end();
-
+        this._pokemonService.updateById(idPokemon, pokemon)
+            .then(pokemonUpdated => response.status(HttpStatus.OK).json(pokemonUpdated));
     }
 
     battle(request, response) {
