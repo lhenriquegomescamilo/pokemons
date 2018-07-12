@@ -50,9 +50,9 @@ class PokemonsController {
         this._pokemonService
             .findById(idPokemonA)
             .then(pokemonA => this._findAnotherPokemonAndConcat(idPokemonB, pokemonA))
-            .then(pokemonsToFight => this._fight(pokemonsToFight.pokemonA, pokemonsToFight.pokemonB))
-            .then(pokemonWinner => this._pokemonService.updateById(pokemonWinner.id, {nivel: ++pokemonWinner.nivel}))
-            .then(pokemonWinner => response.status(HttpStatus.OK).json(pokemonWinner));
+            .then(pokemonsToFight => this._fight(pokemonsToFight))
+            .then(resultOfBattles => this._saveResultOfBattle(resultOfBattles))
+            .then(resultOfBattles => response.status(HttpStatus.OK).json(resultOfBattles));
     }
 
     _findAnotherPokemonAndConcat(idPokemonB, pokemonA) {
@@ -62,17 +62,26 @@ class PokemonsController {
             });
     }
 
-    _fight(pokemonA, pokemonB) {
-        const weights = this._checkLevel(pokemonA, pokemonB);
-        const valueRandom = Math.random();
-        const pokemonsInArena = [pokemonA, pokemonB];
+    _fight(pokemonsToFight) {
 
+        const pokemonsInArena = [pokemonsToFight.pokemonA, pokemonsToFight.pokemonB];
+        const pokemonWinner = this._engineFight(pokemonsInArena);
+        const pokemonLoser = pokemonsInArena.find(p => p.id != pokemonWinner.id);
+        pokemonWinner.nivel++;
+        pokemonLoser.nivel--;
+        return {pokemonWinner, pokemonLoser};
+
+
+    }
+
+    _engineFight(pokemonsInArena) {
+        const weights = this._checkLevel(pokemonsInArena[0], pokemonsInArena[1]);
+        const valueRandom = Math.random();
         let sumScore = 0, lastIndex = weights.length - 1;
         for (let index = 0; index < lastIndex; ++index) {
             sumScore += weights[index];
             if (valueRandom < sumScore) return pokemonsInArena[index];
         }
-
         return pokemonsInArena[lastIndex];
     }
 
@@ -83,6 +92,21 @@ class PokemonsController {
     }
 
 
+    _saveResultOfBattle(resultOfBattle) {
+        const updatePokemonWinner = this._pokemonService.updateById(resultOfBattle.pokemonWinner.id, {nivel: resultOfBattle.pokemonWinner.nivel});
+        const updatePokemonLoser = this._pokemonService.updateById(resultOfBattle.pokemonLoser.id, {nivel: resultOfBattle.pokemonLoser.nivel});
+        return Promise.all([updatePokemonWinner, updatePokemonLoser])
+            .then(() => {
+                if (resultOfBattle.pokemonLoser.nivel == 0) {
+                    return this._pokemonService.removeById(resultOfBattle.pokemonLoser.id);
+                }
+                return Promise.resolve();
+            })
+            .then(() => {
+                return {vencedor: resultOfBattle.pokemonWinner, perderdor: resultOfBattle.pokemonLoser};
+            });
+
+    }
 }
 
 module.exports = PokemonsController;
