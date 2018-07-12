@@ -38,18 +38,19 @@ class PokemonService {
 
     findAll() {
         return Promise.resolve(this._pokemonModel.findAll())
-            .then(sequelizeObject => {
-                return plain(sequelizeObject);
-            })
+            .then(sequelizeObject => plain(sequelizeObject));
     }
 
     findById(idPokemon) {
-        return from(this.data)
-            .pipe(filter(pokemon => pokemon.id == idPokemon))
+        return Promise
+            .resolve(this._pokemonModel.findOne({where: {id: idPokemon}}))
+            .then(sequelizeObject => plain(sequelizeObject));
     }
 
     removeById(idPokemon) {
-        this.data = this.data.filter(pokemon => pokemon.id != idPokemon);
+        return Promise.resolve(this._pokemonModel.destroy({where: {id: idPokemon}}))
+            .then(sequelizeObject => plain(sequelizeObject))
+            .catch(error => error);
 
     }
 

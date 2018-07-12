@@ -24,16 +24,17 @@ class PokemonsController {
 
     findById(request, response) {
         const idPokemon = request.params.id;
-        return this._pokemonService.findById(idPokemon).subscribe(
-            pokemon => response.status(HttpStatus.OK).json(pokemon),
-            error => response.status(HttpStatus.BAD_GATEWAY).json(error)
-        ).unsubscribe();
+        return this._pokemonService.findById(idPokemon)
+            .then(pokemon => response.status(HttpStatus.OK).json(pokemon))
+            .catch(error => response.status(HttpStatus.BAD_GATEWAY).json(error))
+
     }
 
     removeById(request, response) {
         const idPokemon = request.params.id;
-        this._pokemonService.removeById(idPokemon);
-        response.status(HttpStatus.NO_CONTENT).end();
+        this._pokemonService.removeById(idPokemon)
+            .then(() => response.status(HttpStatus.NO_CONTENT).end())
+
     }
 
     updatebyId(request, response) {
