@@ -47,20 +47,19 @@ class PokemonsController {
     battle(request, response) {
         const idPokemonA = request.params.pokemonIdA;
         const idPokemonB = request.params.pokemonIdB;
-
         this._pokemonService
             .findById(idPokemonA)
-            .subscribe(pokemonA => {
-                this._pokemonService
-                    .findById(idPokemonB)
-                    .subscribe(pokemonB => {
-                        const pokemonWinner = this._fight(pokemonA, pokemonB)
-                        this._pokemonService.updateById(pokemonWinner.id, {nivel: pokemonWinner.nivel++})
-                        response.status(HttpStatus.OK).json(pokemonWinner);
-                    });
+            .then(pokemonA => this._findAnotherPokemonAndConcat(idPokemonB, pokemonA))
+            .then(pokemonsToFight => this._fight(pokemonsToFight.pokemonA, pokemonsToFight.pokemonB))
+            .then(pokemonWinner => this._pokemonService.updateById(pokemonWinner.id, {nivel: ++pokemonWinner.nivel}))
+            .then(pokemonWinner => response.status(HttpStatus.OK).json(pokemonWinner));
+    }
+
+    _findAnotherPokemonAndConcat(idPokemonB, pokemonA) {
+        return this._pokemonService.findById(idPokemonB)
+            .then(anotherPokemon => {
+                return {pokemonA: pokemonA, pokemonB: anotherPokemon};
             });
-
-
     }
 
     _fight(pokemonA, pokemonB) {
@@ -82,6 +81,8 @@ class PokemonsController {
         if (pokemonA.nivel > pokemonB.nivel) return [2 / 3, 1 / 3];
         if (pokemonA.nivel < pokemonB.nivel) return [1 / 3, 2 / 3];
     }
+
+
 }
 
 module.exports = PokemonsController;
