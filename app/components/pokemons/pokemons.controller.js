@@ -17,10 +17,9 @@ class PokemonsController {
     }
 
     findAll(request, response) {
-        this._pokemonService.findAll().subscribe(
-            pokemons => response.status(HttpStatus.OK).json(pokemons),
-            error => response.status(HttpStatus.BAD_GATEWAY).json(error)
-        ).unsubscribe();
+        this._pokemonService.findAll()
+            .then(pokemons => response.status(HttpStatus.OK).json(pokemons))
+            .catch(error => response.status(HttpStatus.BAD_GATEWAY).json(error));
     }
 
     findById(request, response) {

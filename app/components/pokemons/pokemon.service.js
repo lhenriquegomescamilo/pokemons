@@ -1,6 +1,7 @@
 const {of, from} = require('rxjs');
 const {filter} = require('rxjs/operators');
 const db = require('../../models');
+const plain = require('../../utils/plain');
 
 class PokemonService {
 
@@ -21,16 +22,25 @@ class PokemonService {
     }
 
     create(pokemon) {
-        // const pokemons = {...newPokemon, id: 3, nivel: 1};
-        // this.data.push(pokemons);
-        // return pokemons;
-        return Promise.resolve(this._pokemonModel.create(pokemon))
-            .then(sequelizeObject => sequelizeObject.dataValues)
+        return Promise
+            .resolve(this._pokemonModel.create(pokemon))
+            .then(sequelizeObject => {
+                return plain(sequelizeObject)
+            })
 
     }
 
+    _extractDefault() {
+        return sequelizeObject => {
+            return sequelizeObject.dataValues;
+        }
+    }
+
     findAll() {
-        return of(this.data);
+        return Promise.resolve(this._pokemonModel.findAll())
+            .then(sequelizeObject => {
+                return plain(sequelizeObject);
+            })
     }
 
     findById(idPokemon) {
