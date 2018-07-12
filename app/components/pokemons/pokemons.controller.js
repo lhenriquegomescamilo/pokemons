@@ -63,7 +63,6 @@ class PokemonsController {
     }
 
     _fight(pokemonsToFight) {
-
         const pokemonsInArena = [pokemonsToFight.pokemonA, pokemonsToFight.pokemonB];
         const pokemonWinner = this._engineFight(pokemonsInArena);
         const pokemonLoser = pokemonsInArena.find(p => p.id != pokemonWinner.id);
@@ -93,9 +92,15 @@ class PokemonsController {
 
 
     _saveResultOfBattle(resultOfBattle) {
-        const updatePokemonWinner = this._pokemonService.updateById(resultOfBattle.pokemonWinner.id, {nivel: resultOfBattle.pokemonWinner.nivel});
-        const updatePokemonLoser = this._pokemonService.updateById(resultOfBattle.pokemonLoser.id, {nivel: resultOfBattle.pokemonLoser.nivel});
-        return Promise.all([updatePokemonWinner, updatePokemonLoser])
+        const updatePokemonWinner = this._pokemonService.updateById(resultOfBattle.pokemonWinner.id, {
+            nivel: resultOfBattle.pokemonWinner.nivel
+        });
+
+        const updatePokemonLoser = this._pokemonService.updateById(resultOfBattle.pokemonLoser.id, {
+            nivel: resultOfBattle.pokemonLoser.nivel
+        });
+        return Promise
+            .all([updatePokemonWinner, updatePokemonLoser])
             .then(() => {
                 if (resultOfBattle.pokemonLoser.nivel == 0) {
                     return this._pokemonService.removeById(resultOfBattle.pokemonLoser.id);

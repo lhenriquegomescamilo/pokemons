@@ -1,5 +1,3 @@
-const {of, from} = require('rxjs');
-const {filter} = require('rxjs/operators');
 const db = require('../../models');
 const plain = require('../../utils/plain');
 
@@ -7,18 +5,6 @@ const START_LEVEL = 1;
 class PokemonService {
 
     constructor() {
-        this.data = [{
-            "id": 1,
-            "tipo": "pikachu",
-            "treinador": "Thiago",
-            "nivel": 1
-        }, {
-            "id": 2,
-            "tipo": "charizard",
-            "treinador": "Renato",
-            "nivel": 1
-        }];
-
         this._pokemonModel = db.sequelize.model('Pokemon');
     }
 
