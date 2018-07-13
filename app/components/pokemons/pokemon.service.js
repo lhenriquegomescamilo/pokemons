@@ -2,6 +2,7 @@ const db = require('../../models');
 const plain = require('../../utils/plain');
 
 const START_LEVEL = 1;
+
 class PokemonService {
 
     constructor() {
@@ -24,9 +25,13 @@ class PokemonService {
     }
 
     findById(idPokemon) {
+        console.log('ID POKEMON', idPokemon);
         return Promise
             .resolve(this._pokemonModel.findOne({where: {id: idPokemon}}))
-            .then(sequelizeObject => plain(sequelizeObject));
+            .then(sequelizeObject => {
+                console.log('SEQUELIZE OBJECT', sequelizeObject);
+                return plain(sequelizeObject);
+            });
     }
 
     removeById(idPokemon) {

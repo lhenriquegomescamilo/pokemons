@@ -25,6 +25,7 @@
 
 ### Executando o projeto
   * Pelo terminal navegue até a pasta e depois execute o seguinte comando:
+
  ````
  $ npm install
  ````

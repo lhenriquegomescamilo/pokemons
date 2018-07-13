@@ -1,11 +1,28 @@
 const {app, expect, request} = require('./config/helpers');
 const HttpStatus = require('http-status');
-
+const models = require('../../app/models');
 describe('Testando endpoint de pokemon ', () => {
+    beforeEach(done => {
+        const newPokemon = {
+            "id": 1,
+            "tipo": "pikachu",
+            "treinador": "Thiago"
+        };
+        const PokemonModel = models.sequelize.model('Pokemon');
+        PokemonModel.sequelize
+            .sync()
+            .then(() => {
+                PokemonModel
+                    .findOrCreate({where: {id: newPokemon.id}, defaults: newPokemon})
+                    .spread(() => done());
+            })
 
+
+    });
     describe('POST pokemons', () => {
+
         it('Cadastrando novo pokemon', done => {
-            const newPokemon =   {
+            const newPokemon = {
                 "tipo": "pikachu",
                 "treinador": "Thiago"
             };
@@ -36,7 +53,7 @@ describe('Testando endpoint de pokemon ', () => {
 
         it('Buscando pokemon por ID', done => {
             request(app)
-                .get('/api/pokemons/1')
+                .get('/api/pokemons/2')
                 .set('Content-Type', 'application/json')
                 .end((error, response) => {
                     expect(response.status).to.equal(HttpStatus.OK);
@@ -67,7 +84,7 @@ describe('Testando endpoint de pokemon ', () => {
                 .set('Content-Type', 'application/json')
                 .send(trainer)
                 .end((error, response) => {
-                    expect(response.status).to.equal(HttpStatus.NO_CONTENT);
+                    expect(response.status).to.equal(HttpStatus.OK);
                     done(error);
                 })
         });
