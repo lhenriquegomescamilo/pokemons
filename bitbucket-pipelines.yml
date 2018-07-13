@@ -1,0 +1,21 @@
+image: node:8.9.4
+pipelines: 
+  default:
+    - step:
+        name: Test
+        script:  
+          - npm install mysql
+          - npm install
+          - export NODE_ENV=bitbucket
+          - npm run integration-test
+        services: 
+          - mysql
+definitions: 
+  services: 
+    mysql: 
+      image: mysql 
+      environment: 
+        MYSQL_DATABASE: 'challenge-jazida'
+        MYSQL_ROOT_PASSWORD: 'root'
+        MYSQL_USER: 'challenge-jazida'
+        MYSQL_PASSWORD: 'challenge-jazida'
