@@ -8,6 +8,7 @@ pipelines:
           - npm install mysql2
           - npm install
           - export NODE_ENV=bitbucket
+          - npm run migrate
           - npm run integration-test
         services: 
           - mysql
