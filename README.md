@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/lhenriquegomescamilo/pokemons.svg?branch=master)](https://travis-ci.org/lhenriquegomescamilo/pokemons)
+
 ### Arquitetura do projeto
 * Estrutura básica do projeto
 
