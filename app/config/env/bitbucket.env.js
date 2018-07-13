@@ -2,7 +2,7 @@ module.exports = {
     env: 'development',
     secret: 'S3cr3t',
     serverPort: 3000,
-    dialect: 'mysql2',
+    dialect: 'mysql',
     database: 'challenge-jazida',
     username: 'challenge-jazida',
     password: 'challenge-jazida',

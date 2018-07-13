@@ -3,8 +3,7 @@ pipelines:
   default:
     - step:
         name: Test
-        script:  
-          - npm install mysql
+        script:
           - npm install mysql2
           - npm install
           - export NODE_ENV=bitbucket
