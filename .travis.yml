@@ -1,0 +1,21 @@
+language: node_js
+node_js:
+  - 8.10.
+sudo: required
+
+services:
+  - mysql
+
+before_install:
+ - mysql -e 'create database antvel;'
+
+
+ script:
+    - export NODE_ENV=development
+    - npm run integration-test
+#   - istanbul cover node_modules/.bin/$}{}
+#   - codecov
+branches:
+  only:
+    - master
+    - dev
