@@ -7,12 +7,12 @@ services:
   - mysql
 
 before_install:
-    - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('challenge-jazida') where User='challenge-jazida'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
+    - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('challenge-jazida') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
     - sudo mysql_upgrade
     - sudo service mysql restart
     - sudo mysql -e 'CREATE DATABASE IF NOT EXISTS challenge-jazida;'
 script:
-  - export NODE_ENV=development
+  - export NODE_ENV=github
   - npm run integration-test
 #   - istanbul cover node_modules/.bin/$}{}
 #   - codecov
