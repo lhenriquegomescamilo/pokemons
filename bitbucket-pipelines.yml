@@ -16,7 +16,7 @@ definitions:
     mysql: 
       image: mysql 
       environment: 
-        MYSQL_DATABASE: 'challenge-jazida'
+        MYSQL_DATABASE: 'pokemons-jazida'
         MYSQL_ROOT_PASSWORD: 'root'
         MYSQL_USER: 'challenge-jazida'
         MYSQL_PASSWORD: 'challenge-jazida'
