@@ -7,7 +7,7 @@ module.exports = {
     username: 'challenge-jazida',
     password: 'challenge-jazida',
     port: 3306,
-    dbURL: '',
+    dbURL: 'localhost',
     host: 'localhost',
     define: {
         // prevent sequelize from pluralizing table names

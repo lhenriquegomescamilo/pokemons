@@ -29,7 +29,6 @@ class PokemonService {
         return Promise
             .resolve(this._pokemonModel.findOne({where: {id: idPokemon}}))
             .then(sequelizeObject => {
-                console.log('SEQUELIZE OBJECT', sequelizeObject);
                 return plain(sequelizeObject);
             });
     }
