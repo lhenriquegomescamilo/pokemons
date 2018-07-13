@@ -5,6 +5,7 @@ pipelines:
         name: Test
         script:  
           - npm install mysql
+          - npm install mysql2
           - npm install
           - export NODE_ENV=bitbucket
           - npm run integration-test
