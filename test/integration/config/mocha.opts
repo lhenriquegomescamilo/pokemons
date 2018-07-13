@@ -3,3 +3,4 @@
 --recursive
 --slow 5000
 --timeout 350000
+--exit
