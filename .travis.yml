@@ -15,8 +15,9 @@ addons:
       - mysql-client
 
 before_install:
-    - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('challenge-jazida') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
     - sudo mysql -e 'CREATE DATABASE IF NOT EXISTS challenge-jazida;'
+    - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('challenge-jazida') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
+
 script:
   - export NODE_ENV=github
   - npm run integration-test
